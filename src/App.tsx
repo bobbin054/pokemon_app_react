@@ -12,16 +12,15 @@ function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    const fetchData = async () => {
+    async function fetchData() {
       const apiResponse = await axios.get(currentPageUrl);
-      setLoading(false);
       setPokemon(apiResponse.data.results.map((p: any) => p));
-     
       setNextPageUrl(apiResponse.data.next);
       setPrevPageUrl(apiResponse.data.previous);
-    };
+      setLoading(false);
+    }
     fetchData();
-  }, [currentPageUrl]);
+  }, []);
 
   function gotoNextPage() {
     setCurrentPageUrl(nextPageUrl);
