@@ -1,11 +1,23 @@
 import React from "react";
 
-export default function PokemonList({ pokemon }: { pokemon: string[] }) {
+interface Pokemon {
+  name: string;
+  url: string;
+}
+
+interface PokemonListProps {
+  pokemon: Pokemon[];
+}
+
+export default function PokemonList({ pokemon }: PokemonListProps) {
   return (
-    <ul>
-      {pokemon.map((p) => (
-        <li key={p}>{p}</li>
-      ))}
-    </ul>
+    <>
+      <pre>{JSON.stringify(pokemon, null, 2)}</pre>
+      <ul>
+        {pokemon.map((p: Pokemon) => (
+          <li key={p.name}>{p.name}</li>
+        ))}
+      </ul>
+    </>
   );
 }

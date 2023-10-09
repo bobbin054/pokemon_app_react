@@ -5,7 +5,7 @@ import axios from "axios";
 import Pagenation from "./Pagination";
 
 function App() {
-  const [pokemon, setPokemon] = useState<string[]>([]);
+  const [pokemon, setPokemon] = useState<any>([]);
   const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon");
   const [nextPageUrl, setNextPageUrl] = useState("");
   const [prevPageUrl, setPrevPageUrl] = useState("");
@@ -15,7 +15,8 @@ function App() {
     const fetchData = async () => {
       const res = await axios.get(currentPageUrl);
       setLoading(false);
-      setPokemon(res.data.results.map((p: any) => p.name));
+      setPokemon(res.data.results.map((p: any) => p));
+     
       setNextPageUrl(res.data.next);
       setPrevPageUrl(res.data.previous);
     };
