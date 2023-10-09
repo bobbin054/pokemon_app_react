@@ -5,12 +5,20 @@ export default function Pagenation({
   gotoPrevPage,
 }: {
   gotoNextPage: () => void;
-  gotoPrevPage: string | (() => void);
+  gotoPrevPage: () => void;
 }) {
   return (
     <div>
-      {gotoPrevPage && <button onClick={gotoPrevPage}>Previous</button>}
-      {<button onClick={gotoNextPage}>Next</button>}
+      {gotoPrevPage && (
+        <button type="button" onClick={gotoPrevPage}>
+          Previous
+        </button>
+      )}
+      {
+        <button type="button" onClick={gotoNextPage}>
+          Next
+        </button>
+      }
     </div>
   );
 }

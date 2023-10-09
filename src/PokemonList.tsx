@@ -2,10 +2,10 @@ import React from "react";
 
 export default function PokemonList({ pokemon }: { pokemon: string[] }) {
   return (
-    <div>
+    <ul>
       {pokemon.map((p) => (
-        <div key={p}>{p}</div>
+        <li key={p}>{p}</li>
       ))}
-    </div>
+    </ul>
   );
 }

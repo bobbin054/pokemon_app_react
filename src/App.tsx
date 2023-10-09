@@ -12,12 +12,14 @@ function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    axios.get(currentPageUrl).then((res) => {
+    const fetchData = async () => {
+      const res = await axios.get(currentPageUrl);
       setLoading(false);
       setPokemon(res.data.results.map((p: any) => p.name));
       setNextPageUrl(res.data.next);
       setPrevPageUrl(res.data.previous);
-    });
+    };
+    fetchData();
   }, [currentPageUrl]);
 
   function gotoNextPage() {
@@ -31,6 +33,7 @@ function App() {
   if (loading) return "Loading...";
   return (
     <>
+      <div>Current URL: {currentPageUrl}</div>
       <PokemonList pokemon={pokemon} />
       <Pagenation gotoNextPage={gotoNextPage} gotoPrevPage={prevPageUrl && gotoPrevPage}></Pagenation>
     </>
