@@ -13,12 +13,12 @@ function App() {
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
-      const res = await axios.get(currentPageUrl);
+      const apiResponse = await axios.get(currentPageUrl);
       setLoading(false);
-      setPokemon(res.data.results.map((p: any) => p));
+      setPokemon(apiResponse.data.results.map((p: any) => p));
      
-      setNextPageUrl(res.data.next);
-      setPrevPageUrl(res.data.previous);
+      setNextPageUrl(apiResponse.data.next);
+      setPrevPageUrl(apiResponse.data.previous);
     };
     fetchData();
   }, [currentPageUrl]);
