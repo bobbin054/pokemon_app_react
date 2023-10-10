@@ -1,12 +1,6 @@
 import React from "react";
 
-export default function Pagenation({
-  gotoNextPage,
-  gotoPrevPage,
-}: {
-  gotoNextPage: () => void;
-  gotoPrevPage: () => void;
-}) {
+export default function Pagenation({ gotoNextPage, gotoPrevPage }) {
   return (
     <div>
       {gotoPrevPage && (
@@ -14,11 +8,11 @@ export default function Pagenation({
           Previous
         </button>
       )}
-      {
+      {gotoNextPage && (
         <button type="button" onClick={gotoNextPage}>
           Next
         </button>
-      }
+      )}
     </div>
   );
 }

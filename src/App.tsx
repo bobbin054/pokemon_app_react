@@ -36,7 +36,7 @@ function App() {
       <h1>List of Pokemon</h1>
       {/* <div>Current URL: {data}</div> */}
       <PokemonList pokemon={data.results} />
-      {/* <Pagenation gotoNextPage={nextPageUrl && gotoNextPage} gotoPrevPage={prevPageUrl && gotoPrevPage}></Pagenation> */}
+      <Pagenation gotoNextPage={nextPageUrl && gotoNextPage} gotoPrevPage={prevPageUrl && gotoPrevPage}></Pagenation>
     </>
   );
 }
