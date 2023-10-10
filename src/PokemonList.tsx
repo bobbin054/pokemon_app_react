@@ -1,20 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { IPokemon, Pokemon } from "./Pokemon";
 
-interface Pokemon {
-  name: string;
-  url: string;
-}
-
-interface PokemonListProps {
-  pokemon: Pokemon[];
-}
-
-export default function PokemonList({ pokemon }: PokemonListProps) {
+export default function PokemonList(pokemon: IPokemon) {
+  if (pokemon?.pokemon?.length <= 0) return "No pokemon found";
   return (
     <>
-      <pre>{JSON.stringify(pokemon, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(pokemon.pokemon, null, 2)}</pre> */}
+      {console.log(pokemon)}
       <ul>
-        {pokemon.map((p: Pokemon) => (
+        {pokemon.pokemon.map((p: Pokemon) => (
           <li key={p.name}>{p.name}</li>
         ))}
       </ul>
