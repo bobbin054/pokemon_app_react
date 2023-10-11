@@ -9,13 +9,21 @@ const POKE_API = "https://pokeapi.co/api/v2/pokemon";
 async function fetcher(endpoint: string) {
   const response = await fetch(endpoint);
   const json = await response.json();
+  const pokeDataPromises = json.results.map(async (p: any) => {
+    const pokeData = await fetch(p.url);
+    return pokeData.json();
+  });
+  const pokeData = await Promise.all(pokeDataPromises);
+  json.results.forEach((p: any, i: number) => {
+    p.data = pokeData[i];
+  });
   return json;
 }
 
 function App() {
   const [currentPageUrl, setCurrentPageUrl] = useState(POKE_API);
   const { data, error } = useSWR(currentPageUrl, fetcher);
-  console.log("data:", data);
+  // console.log("data:", data);
   if (error) return <pre>Error: {JSON.stringify(error, null, 2)}</pre>;
 
   function gotoNextPage() {
