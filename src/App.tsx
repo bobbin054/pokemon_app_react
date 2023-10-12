@@ -7,16 +7,21 @@ import useSWR from "swr";
 const POKE_API = "https://pokeapi.co/api/v2/pokemon";
 
 async function fetcher(endpoint: string) {
-  const response = await fetch(endpoint);
-  const json = await response.json();
-  const pokeDataPromises = json.results.map(async (p: any) => {
-    const pokeData = await fetch(p.url);
-    return pokeData.json();
-  });
-  const pokeData = await Promise.all(pokeDataPromises);
-  json.results.forEach((p: any, i: number) => {
-    p.data = pokeData[i];
-  });
+  const json = await (await fetch(endpoint)).json();
+  // Recursively check for URL properties and make requests on those URLs
+  const checkForUrls = async (obj: any) => {
+    for (const key in obj) {
+      if (key === "url") {
+        obj.data = await (await fetch(obj[key])).json();
+        delete obj.url;
+        
+      } else if (typeof obj[key] === "object" && obj[key] !== null) {
+        await checkForUrls(obj[key]);
+      }
+    }
+  };
+  await checkForUrls(json);
+  console.log("json:", json);
   return json;
 }
 
