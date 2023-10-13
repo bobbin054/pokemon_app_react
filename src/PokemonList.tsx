@@ -3,7 +3,7 @@ import { IPokemon, Pokemon } from "./Pokemon";
 
 export default function PokemonList(pokemon: IPokemon) {
   // console.log("pokemon:", pokemon);
-  if (pokemon?.pokemon?.length <= 0) return <div>No pokemon found</div>;
+  if (pokemon?.pokemon == null || pokemon.pokemon.length <= 0) return <div>No pokemon found</div>;
   return (
     <>
       <table>
