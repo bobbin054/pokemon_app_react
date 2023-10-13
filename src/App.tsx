@@ -4,7 +4,7 @@ import PokemonList from "./PokemonList";
 import Pagenation from "./Pagination";
 import useSWR from "swr";
 
-const POKE_API = "https://pokeapi.co/api/v2/pokemon";
+const POKE_API = "https://pokeapi.co/api/v2/pokemon?limit=5";
 
 async function fetcher(endpoint: string) {
   const json = await (await fetch(endpoint)).json();
