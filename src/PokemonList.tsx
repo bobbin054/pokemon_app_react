@@ -14,10 +14,8 @@ export default function PokemonList(pokemon: IPokemon) {
             <th>back_default</th>
             <th>front_shiny</th>
             <th>back_shiny</th>
-
             <th>Height</th>
             <th>Weight</th>
-
             <th>Abilities</th>
           </tr>
         </thead>
