@@ -10,14 +10,20 @@ async function fetcher(endpoint: string) {
   const json = await (await fetch(endpoint)).json();
   // Recursively check for URL properties and make requests on those URLs
   const checkForUrls = async (obj: any) => {
+    const promises = [];
     for (const key in obj) {
       if (key === "url") {
-        obj.data = await (await fetch(obj[key])).json();
-        delete obj.url;
+        promises.push(
+          (async () => {
+            obj.data = await (await fetch(obj[key])).json();
+            delete obj.url;
+          })()
+        );
       } else if (typeof obj[key] === "object" && obj[key] !== null) {
-        await checkForUrls(obj[key]);
+        promises.push(checkForUrls(obj[key]));
       }
     }
+    await Promise.all(promises);
   };
   await checkForUrls(json);
   console.log("json:", json);
