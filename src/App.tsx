@@ -14,7 +14,6 @@ async function fetcher(endpoint: string) {
       if (key === "url") {
         obj.data = await (await fetch(obj[key])).json();
         delete obj.url;
-        
       } else if (typeof obj[key] === "object" && obj[key] !== null) {
         await checkForUrls(obj[key]);
       }
