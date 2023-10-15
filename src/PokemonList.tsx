@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { IPokemon, Pokemon } from "./Pokemon";
 
-export default function PokemonList(pokemon: IPokemon) {
+export default function PokemonTable(pokemon: IPokemon) {
   // console.log("pokemon:", pokemon);
   if (pokemon?.pokemon == null || pokemon.pokemon.length <= 0) return <div>No pokemon found</div>;
   return (

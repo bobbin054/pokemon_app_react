@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import PokemonList from "./PokemonList";
+import PokemonTable from "./PokemonList";
 import Pagenation from "./Pagination";
 import useSWR from "swr";
 
@@ -48,7 +48,7 @@ function App() {
     <>
       <h1>List of Pokemon</h1>
       <div>Current URL: {currentPageUrl}</div>
-      <PokemonList pokemon={data?.results} />
+      <PokemonTable pokemon={data?.results} />
       <Pagenation gotoNextPage={gotoNextPage} gotoPrevPage={data?.previous && gotoPrevPage}></Pagenation>
     </>
   );
