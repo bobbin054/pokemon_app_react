@@ -49,12 +49,19 @@ export default function PokemonTable({ pokemon }: { pokemon: Pokemon[] }) {
     }
     return obj[props[i]];
   }
+
+  function getLargestArray(matrix: any[][]) {
+    return matrix.reduce((acc, arr) => {
+      return arr.length > acc.length ? arr : acc;
+    }, []);
+  }
+
   return (
     <>
       <table>
         <thead>
           <tr>
-            {rows.at(0)?.map((headerPropRef) => (
+            {getLargestArray(rows)?.map((headerPropRef) => (
               <th key={headerPropRef}>{headerPropRef}</th>
             ))}
           </tr>
