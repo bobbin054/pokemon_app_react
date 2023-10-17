@@ -2,12 +2,11 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Pokemon } from "./Pokemon";
 
 export default function PokemonTable({ pokemon }: { pokemon: Pokemon[] }) {
-  const [properties, setProperties] = useState<any[]>([]);
-
+  const [rows, setRows] = useState<any[][]>([]);
   if (!pokemon || pokemon.length <= 0) return <div>No pokemon found</div>;
 
   useEffect(() => {
-    const allProperties: string[] = [];
+    let allProperties: string[] = [];
     function getProperties(obj: any, path: string = "") {
       for (const prop in obj) {
         if (typeof obj[prop] === "object") {
@@ -18,10 +17,19 @@ export default function PokemonTable({ pokemon }: { pokemon: Pokemon[] }) {
       }
     }
     getProperties(pokemon);
-    const uniqueProperties = [...new Set(allProperties)];
-    // console.log("uniqueProperties:", uniqueProperties);
-    setProperties(uniqueProperties);
+
+    const groupedArray = allProperties.reduce((acc, item) => {
+      const firstChar = item.charAt(0);
+      if (!acc[firstChar]) {
+        acc[firstChar] = [];
+      }
+      acc[firstChar].push(item);
+      return acc;
+    }, {});
+
+    setRows(Object.values(groupedArray));
   }, [pokemon]);
+  console.log(rows); // [["1.a", "1.b", "1.c"], ["2.a", "2.b"], ["3.a", "3.b", "3.c"]]
 
   function getPropByString(obj, propString) {
     if (!propString) return obj;
@@ -41,35 +49,24 @@ export default function PokemonTable({ pokemon }: { pokemon: Pokemon[] }) {
     }
     return obj[props[i]];
   }
-
   return (
     <>
       <table>
         <thead>
           <tr>
-            {properties.map((prop) => (
-              <th key={prop + "benny"}>{prop}</th>
+            {rows.at(0)?.map((headerPropRef) => (
+              <th key={headerPropRef}>{headerPropRef}</th>
             ))}
           </tr>
+          {rows.map((row, i) => (
+            <tr key={i}>
+              {row.map((propString) => (
+                <td key={propString}>{getPropByString(pokemon, propString)}</td>
+              ))}
+            </tr>
+          ))}
         </thead>
-        {pokemon?.map((p: Pokemon) => {
-          return (
-            <Fragment key={`${p.name}-kurt`}>
-              <tbody>
-                <tr>
-                  {properties.map((prop, i) => (
-                    // <td key={`${p.name}_${i}`}>{p[prop] +' '+ prop} </td>
-                    <td key={`${p.name}_${i}`}>
-                      {getPropByString(p, prop) !== "object" &&
-                        !Array.isArray(getPropByString(p, prop)) &&
-                        getPropByString(p, prop)}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </Fragment>
-          );
-        })}
+        <tbody></tbody>
       </table>
     </>
   );
