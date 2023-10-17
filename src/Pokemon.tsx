@@ -4,6 +4,3 @@ export type Pokemon = {
   url: string;
 };
 
-export interface IPokemon {
-  pokemon: Pokemon[];
-}

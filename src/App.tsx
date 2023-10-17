@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import PokemonTable from "./PokemonList";
+import PokemonTable from "./PokemonTable";
 import Pagenation from "./Pagination";
 import useSWR from "swr";
 
@@ -26,14 +26,14 @@ async function fetcher(endpoint: string) {
     await Promise.all(promises);
   };
   await checkForUrls(json);
-  console.log("json:", json);
+  // console.log("json:", json);
   return json;
 }
 
 function App() {
   const [currentPageUrl, setCurrentPageUrl] = useState(POKE_API);
   const { data, error } = useSWR(currentPageUrl, fetcher);
-  // console.log("data:", data);
+  console.log("data:", data);
   if (error) return <pre>Error: {JSON.stringify(error, null, 2)}</pre>;
 
   function gotoNextPage() {
@@ -48,7 +48,7 @@ function App() {
     <>
       <h1>List of Pokemon</h1>
       <div>Current URL: {currentPageUrl}</div>
-      <PokemonTable pokemon={data?.results} />
+      {data?.results && <PokemonTable pokemon={data?.results} />}
       <Pagenation gotoNextPage={gotoNextPage} gotoPrevPage={data?.previous && gotoPrevPage}></Pagenation>
     </>
   );
