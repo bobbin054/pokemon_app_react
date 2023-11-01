@@ -26,8 +26,13 @@ export default function PokemonTable({ pokemon }: { pokemon: Pokemon[] }) {
       acc[firstChar].push(item);
       return acc;
     }, {});
-
-    setRows(Object.values(groupedArray));
+    const result = Object.values(groupedArray);
+    const largestArray = getLargestArray(result);
+    const sameSizeMatrix = result.map((arr) => {
+      const diff = largestArray.length - arr.length;
+      return [...arr, ...Array(diff).fill("N/A")];
+    });
+    setRows(sameSizeMatrix);
   }, [pokemon]);
   console.log(rows); // [["1.a", "1.b", "1.c"], ["2.a", "2.b"], ["3.a", "3.b", "3.c"]]
 
@@ -61,15 +66,18 @@ export default function PokemonTable({ pokemon }: { pokemon: Pokemon[] }) {
       <table>
         <thead>
           <tr>
-            {getLargestArray(rows)?.map((headerPropRef) => (
-              <th key={headerPropRef}>{headerPropRef}</th>
+            {rows.at(0)?.map((headerPropRef: string, i) => (
+              <th key={headerPropRef + i}>{headerPropRef}</th>
             ))}
           </tr>
           {rows.map((row, i) => (
             <tr key={i}>
-              {row.map((propString) => (
-                <td key={propString}>{getPropByString(pokemon, propString)}</td>
-              ))}
+              {row.map((propString) => {
+                const propValue = getPropByString(pokemon, propString);
+                if (propValue === "object" || Array.isArray(propValue))
+                  return <td key={self.crypto.randomUUID()}>heeej</td>;
+                else return <td key={self.crypto.randomUUID()}>{propValue}</td>;
+              })}
             </tr>
           ))}
         </thead>
