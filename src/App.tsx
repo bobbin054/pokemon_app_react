@@ -9,7 +9,8 @@ import { MyPokemonFetcher } from "./MyPokemonFetcher";
 function App() {
   return (
     <>
-      <MyPokemonFetcher></MyPokemonFetcher>
+      {/* <MyPokemonFetcher></MyPokemonFetcher> */}
+      <PokeNode></PokeNode>
     </>
   );
 }
