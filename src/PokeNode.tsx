@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { NamedAPIResourceList, Pokemon, PokemonClient } from "pokenode-ts";
+import PokemonTable from "./PokemonTable";
 
 export const PokeNode = () => {
   const [pokemonByName, setPokemonByName] = React.useState<Pokemon | null>(null);
@@ -8,11 +9,12 @@ export const PokeNode = () => {
     (async () => {
       const api = new PokemonClient();
       setPokemonByName(await api.getPokemonByName("luxray"));
-      setListPokemons(await api.listPokemons(0, 20));
+      const tempListPokemons = await api.listPokemons(0, 20);
+      setListPokemons(tempListPokemons);
     })();
   }, []);
-
-  return (
+  console.log("listPokemons:", listPokemons);
+  const content = (
     <>
       A table with all the data from the pokemon luxray
       <table>
@@ -58,4 +60,9 @@ export const PokeNode = () => {
       </table>
     </>
   );
+
+  if (listPokemons?.results) {
+    return <PokemonTable pokemon={listPokemons?.results}></PokemonTable>;
+  }
+  return <span>Loading...</span>;
 };

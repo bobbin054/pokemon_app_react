@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Pokemon } from "./Pokemon";
 
-export default function PokemonTable({ pokemon }: { pokemon: Pokemon[] }) {
+export default function PokemonTable({ pokemon }: { pokemon: any[] }) {
   const [rows, setRows] = useState<any[][]>([]);
   if (!pokemon || pokemon.length <= 0) return <div>No pokemon found</div>;
 
